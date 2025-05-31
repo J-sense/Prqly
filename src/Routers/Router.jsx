@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../Layouts/Dashboard";
-import AnimatedModal from "../components/AnimatedModal/AnimatedModal";
+
 
 export const router = createBrowserRouter([
   {
@@ -8,19 +8,14 @@ export const router = createBrowserRouter([
     element: <Dashboard />,
     errorElement: <h1>404</h1>,
     children: [
+
+
       {
-        path: "/reset-password",
-        element: <AnimatedModal />,
+        path: "/",
+        element: <h1>Main</h1>,
       },
-      {
-        path: "/about",
-        element: <h1>Home</h1>,
-      },
+
     ],
-  },
-  {
-    path: "/login",
-    element: <h1>Login</h1>,
   },
   {
     path: "/register",
