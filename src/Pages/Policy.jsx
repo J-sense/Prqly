@@ -1,7 +1,8 @@
 import terms from "../assets/terms.png";
+
 export default function Policy() {
   return (
-    <section className="py-16 font-popins sm:mx-4 md:px-0">
+    <section className="py-16 font-popins px-4 sm:px-0">
       <div className="max-w-[1640px] ml-auto">
         <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
           Terms of Service
@@ -111,9 +112,9 @@ export default function Policy() {
             </div>
           </div>
 
-          {/* Right side - Illustration */}
-          <div className="lg:sticky lg:top-2">
-            <div className="">
+          {/* Right side - Illustration (hidden on small screens) */}
+          <div className="lg:sticky lg:top-2 hidden sm:block">
+            <div>
               <img
                 src={terms}
                 alt="Team working with financial documents and analytics"

@@ -2,7 +2,7 @@
 import React from "react";
 import { Check, Download } from "lucide-react";
 import Logo from "../ui/Logo";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function BankConnectSuccess({
   step = 3,
@@ -25,11 +25,25 @@ export default function BankConnectSuccess({
 
   return (
     <div className="font-popins">
-      <div className="text-center flex justify-center items-center py-8">
-        <Logo height="100" width="100" />
-      </div>
-      <div className="py-2">
-        <hr />
+      <div className="relative bg-white p-6">
+        {/* Back Button */}
+        <div className="absolute top-12 left-6 font-popins">
+          <Link to="/">
+            <button className="bg-gradient-to-r from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out">
+              Back to Home
+            </button>
+          </Link>
+        </div>
+
+        {/* Logo centered */}
+        <div className="flex justify-center items-center py-8">
+          <Logo height="100" width="100" />
+        </div>
+
+        {/* Divider */}
+        <div className="py-2">
+          <hr className="border-gray-300" />
+        </div>
       </div>
 
       <div className="mx-auto max-w-md rounded-lg border border-gray-200 bg-white shadow-sm mt-20">
@@ -42,7 +56,6 @@ export default function BankConnectSuccess({
               </div>
               <span className="font-semibold text-gray-900">Preqly™</span>
             </div>
-            <Download className="h-5 w-5 text-gray-400" />
           </div>
 
           <div className="mb-2 flex items-center justify-between text-xs text-gray-600">
@@ -51,9 +64,9 @@ export default function BankConnectSuccess({
             </span>
             <span>{percent}% Complete</span>
           </div>
-          <div className="h-2 w-full rounded-full bg-gray-200">
+          <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
             <div
-              className="h-2 rounded-full bg-emerald-500 transition-all duration-300"
+              className="bg-teal-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${percent}%` }}
             />
           </div>
@@ -91,14 +104,14 @@ export default function BankConnectSuccess({
             <button
               type="button"
               onClick={handleBack}
-              className="flex-1 rounded-md bg-secondary px-4 py-3 text-sm font-medium text-white hover:bg-slate-200"
+              className="flex-1 rounded-md bg-blue-300 px-4 py-3 text-sm font-medium text-white hover:bg-slate-200"
             >
               Back
             </button>
             <button
               type="button"
               onClick={handleContinue}
-              className="flex-1 rounded-md bg-primary px-4 py-3 text-sm font-medium text-white hover:bg-slate-800"
+              className="flex-1 rounded-md bg-[#304f71] px-4 py-3 text-sm font-medium text-white hover:bg-slate-800"
             >
               Continue
             </button>

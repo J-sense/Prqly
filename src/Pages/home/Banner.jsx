@@ -1,5 +1,4 @@
 // HeroBanner.jsx
-import React from "react";
 import { Link } from "react-router-dom";
 import bg from "../../assets/banner.png";
 
@@ -10,8 +9,8 @@ export default function HeroBanner({
   ctaTo = "/get-pre-approved",
 }) {
   return (
-    <section className="relative isolate overflow-hidden font-poppins">
-      {/* Background image */}
+    <section className="relative isolate overflow-hidden font-poppins" id="/">
+      
       <img
         src={bg}
         alt=""
@@ -44,13 +43,7 @@ export default function HeroBanner({
               </Link>
 
               {/*
-              If you want the colored button instead, use this:
-              <Link
-                to={ctaTo}
-                className="inline-flex items-center justify-center rounded-2xl bg-secondary px-6 py-3 text-sm font-semibold text-white shadow-lg hover:bg-secondary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary md:px-8 md:py-4 md:text-base"
-              >
-                {ctaText}
-              </Link>
+              
               */}
             </div>
           </div>

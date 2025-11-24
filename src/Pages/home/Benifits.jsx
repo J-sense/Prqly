@@ -1,8 +1,7 @@
-import React from "react";
-import TitleSubtitle from "../../ui/TitleSubtitle";
 import benefit1 from "../../assets/benefitOne.png";
-import benefit2 from "../../assets/benefitTwo.png";
 import benefit3 from "../../assets/benefitThree.png";
+import benefit2 from "../../assets/benefitTwo.png";
+import TitleSubtitle from "../../ui/TitleSubtitle";
 
 export const Benefits = () => {
   const benefits = [
@@ -37,7 +36,7 @@ export const Benefits = () => {
       </div>
 
       {/* Benefits Grid */}
-      <section className="mt-[100px]">
+      <section className="mt-[100px] ">
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-12 md:grid-cols-3 text-center">
           {benefits.map((item) => (
             <div key={item.id} className="flex flex-col items-center">

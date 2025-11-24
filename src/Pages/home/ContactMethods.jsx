@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import axiosBaseApi from "../../axiosApi/baseApi";
 
 export default function ContactMethods() {
   const {
@@ -24,16 +25,16 @@ export default function ContactMethods() {
   const onSubmit = async (data) => {
     setStatus(null);
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error("Failed");
+      console.log(data);
+      const res = await axiosBaseApi.post("/contact/", data);
+      console.log(res);
+      if (res.status === 201) {
+        setStatus("success");
+      }
 
-      setStatus("success");
       reset(); // clears inputs
     } catch (e) {
+      console.log(e);
       setStatus("error");
     }
   };
@@ -169,7 +170,7 @@ export default function ContactMethods() {
                   <input
                     type="text"
                     placeholder="Full Name"
-                    {...register("fullName", {
+                    {...register("full_name", {
                       required: "Full name is required",
                     })}
                     className={`${baseInput} ${

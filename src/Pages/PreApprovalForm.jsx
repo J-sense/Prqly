@@ -1,16 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { jsPDF } from "jspdf"; // Import jsPDF
 import {
+  AlertCircle,
+  CheckCircle,
   ChevronDown,
   Download,
-  CheckCircle,
-  AlertCircle,
   Loader2,
 } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import axiosBaseApi from "../axiosApi/baseApi";
 import Logo from "../ui/Logo";
-import { useNavigate } from "react-router-dom";
 
 export default function PreApprovalForm() {
   const {
@@ -41,19 +43,30 @@ export default function PreApprovalForm() {
     { value: "Purchase", label: "Purchase" },
     { value: "Refinance", label: "Refinance" },
     { value: "HELOC", label: "HELOC" },
-    { value: "Cash-Out", label: "Cash-Out Refinance" },
   ];
 
   const onSubmit = async (data) => {
+    console.log(data);
     setStatus(null);
+
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setStatus("success");
-      setProgress(75);
-      navigate("/pre-approval/bank");
-    } catch {
-      setStatus("error");
+      const res = await axiosBaseApi.post("/loan-application/", {
+        full_name: data?.fullName,
+        email: data?.email,
+        phone_number: data?.phoneNumber,
+        property_zip_code: data?.propertyZipCode,
+        property_address: data?.propertyAddress,
+        annual_income: data?.annualIncome,
+        purchase_price: data?.purchasePrice,
+        down_payment: data?.downPayment,
+        loan_purpose: data?.loanPurpose,
+        cash_out_amount: data?.cashOutAmount,
+      });
+      console.log(res);
+      const { plaid_link_token, id } = res.data;
+      navigate(`/plaid-link-page?token=${plaid_link_token}&loan_id=${id}`);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -61,18 +74,56 @@ export default function PreApprovalForm() {
 
   const handleDownloadPdf = () => {
     const data = getValues();
-    console.log("Downloading PDF with data:", data);
+
+    // Create new PDF instance
+    const doc = new jsPDF();
+
+    // Add content to PDF
+    doc.setFontSize(16);
+    doc.text("Pre-Approval Form", 20, 20);
+
+    doc.setFontSize(12);
+    doc.text(`Full Name: ${data.fullName}`, 20, 30);
+    doc.text(`Email: ${data.email}`, 20, 40);
+    doc.text(`Phone Number: ${data.phoneNumber}`, 20, 50);
+    doc.text(`Property Zip Code: ${data.propertyZipCode}`, 20, 60);
+    doc.text(`Property Address: ${data.propertyAddress}`, 20, 70);
+    doc.text(`Annual Income: $${data.annualIncome}`, 20, 80);
+    doc.text(`Purchase Price: $${data.purchasePrice}`, 20, 90);
+    doc.text(`Down Payment: $${data.downPayment}`, 20, 100);
+    doc.text(`Loan Purpose: ${data.loanPurpose}`, 20, 110);
+    doc.text(`Cash-Out Amount: $${data.cashOutAmount}`, 20, 120);
+
+    // Save the PDF
+    doc.save("pre-approval-form.pdf");
   };
 
   return (
     <div className="">
-      <div className="text-center flex justify-center items-center py-8">
-        <Logo height="100" width="100" />
+      <div className="relative bg-white p-6">
+        {/* Back Button */}
+        <div className="absolute top-12 left-6 font-popins">
+          <Link to="/">
+            <button className="bg-gradient-to-r from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out">
+              Back to Home
+            </button>
+          </Link>
+        </div>
+
+        {/* Logo centered */}
+        <div className="flex justify-center items-center py-8">
+          <Logo height="100" width="100" />
+        </div>
+
+        {/* Divider */}
+        <div className="py-2">
+          <hr className="border-gray-300" />
+        </div>
       </div>
-      <div className="py-2">
-        <hr />
-      </div>
-      <div className="min-h-screen  font-popins border border-gray-300 rounded-sm p-6 mx-auto max-w-md">
+
+      {/* Back to Home Button */}
+
+      <div className="min-h-screen font-popins border border-gray-300 rounded-sm p-6 mx-auto max-w-md">
         <div className="max-w-md mx-auto bg-white my-6">
           <div className="px-6 pt-6 pb-4">
             <div className="flex justify-between items-center text-sm text-gray-600 mb-2">
@@ -121,6 +172,7 @@ export default function PreApprovalForm() {
                 </div>
               )}
 
+              {/* Form Fields */}
               <div>
                 <label
                   htmlFor="fullName"
@@ -283,7 +335,7 @@ export default function PreApprovalForm() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-slate-800 hover:bg-slate-900 disabled:bg-slate-400 text-white font-medium py-4 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 mt-8"
+                className="w-full bg-[#203954] hover:bg-slate-900 disabled:bg-slate-400 text-white font-medium py-4 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 mt-8"
               >
                 {isSubmitting ? (
                   <>

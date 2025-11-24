@@ -1,10 +1,15 @@
 // PlaidConnectForm.jsx
-import React, { useState } from "react";
 import { Eye, EyeOff, Shield } from "lucide-react";
+import { useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import axiosBaseApi from "../axiosApi/baseApi";
 import Logo from "../ui/Logo";
-import { useNavigate } from "react-router-dom";
-
 export default function PlaidConnectForm() {
+  const [searchParams] = useSearchParams();
+
+  const publicToken = searchParams.get("public_token");
+  const loanId = searchParams.get("loan_id");
+  console.log(publicToken);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
@@ -23,9 +28,18 @@ export default function PlaidConnectForm() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // If you want to call your backend before moving on, do it here:
-    // await fetch("/api/plaid/connect", { method: "POST", body: JSON.stringify({ email, pwd }) });
     handleSuccess();
+  };
+  const connectWithPlaid = () => {
+    try {
+      const res = axiosBaseApi.post("/plaid/connect/", {
+        public_token: publicToken,
+        loan_application_id: loanId,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const input =
@@ -33,11 +47,25 @@ export default function PlaidConnectForm() {
 
   return (
     <div className="font-popins">
-      <div className="text-center flex justify-center items-center py-8">
-        <Logo height="100" width="100" />
-      </div>
-      <div className="py-2">
-        <hr />
+      <div className="relative bg-white p-6">
+        {/* Back Button */}
+        <div className="absolute top-12 left-6 font-popins">
+          <Link to="/">
+            <button className="bg-gradient-to-r from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out">
+              Back to Home
+            </button>
+          </Link>
+        </div>
+
+        {/* Logo centered */}
+        <div className="flex justify-center items-center py-8">
+          <Logo height="100" width="100" />
+        </div>
+
+        {/* Divider */}
+        <div className="py-2">
+          <hr className="border-gray-300" />
+        </div>
       </div>
       <div className="max-w-md mx-auto bg-white border border-gray-200 rounded-lg shadow-sm font-poppins">
         {/* Header */}
@@ -52,9 +80,9 @@ export default function PlaidConnectForm() {
               <span>Step 2 of 4</span>
               <span>{percent}% Complete</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
               <div
-                className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                className="bg-teal-500 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${percent}%` }}
               />
             </div>
@@ -155,14 +183,15 @@ export default function PlaidConnectForm() {
               <button
                 type="button"
                 onClick={handleBack}
-                className="flex-1 bg-secondary hover:bg-slate-700 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200"
+                className="flex-1 bg-[#304f71] hover:bg-slate-700 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200"
               >
                 Back
               </button>
 
               <button
+                onClick={connectWithPlaid}
                 type="submit"
-                className="flex-1 bg-primary hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200"
+                className="flex-1 bg-[#00583b] hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200"
               >
                 Connect With Plaid
               </button>

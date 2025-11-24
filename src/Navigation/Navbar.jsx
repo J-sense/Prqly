@@ -9,7 +9,7 @@ export default function PreqlyNavbar() {
   const navigate = useNavigate();
 
   const nav = [
-    { label: "Home", href: "/" },
+    { label: "Home", href: "#/" },
     { label: "How It Works", href: "#how-it-works" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "#contact" },

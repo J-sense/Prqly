@@ -2,7 +2,7 @@
 import React from "react";
 import { X } from "lucide-react";
 import Logo from "../ui/Logo";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function NotApprovedStep({
   step = 4,
@@ -23,13 +23,30 @@ export default function NotApprovedStep({
   };
 
   return (
-    <div className="font-poppins">
+    <div className="font-popins">
       {/* Brand */}
-      <div className="text-center flex justify-center items-center py-8">
-        <Logo height="100" width="100" />
+      <div className="relative bg-white p-6">
+        {/* Back Button */}
+        <div className="absolute top-12 left-6 font-popins">
+          <Link to="/">
+            <button className="bg-gradient-to-r from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out">
+              Back to Home
+            </button>
+          </Link>
+        </div>
+
+        {/* Logo centered */}
+        <div className="flex justify-center items-center py-8">
+          <Logo height="100" width="100" />
+        </div>
+
+        {/* Divider */}
+        <div className="py-2">
+          <hr className="border-gray-300" />
+        </div>
       </div>
 
-      <div className="mx-auto max-w-md rounded-lg border border-gray-200 bg-white shadow-sm">
+      <div className="mx-auto max-w-md rounded-lg border border-gray-200 bg-white shadow-sm my-20">
         {/* Progress */}
         <div className="px-6 pt-4">
           <div className="mb-2 flex items-center justify-between text-xs text-gray-600">
@@ -38,9 +55,9 @@ export default function NotApprovedStep({
             </span>
             <span>{percent}% Complete</span>
           </div>
-          <div className="h-2 w-full rounded-full bg-gray-200">
+          <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
             <div
-              className="h-2 rounded-full bg-emerald-500 transition-all"
+              className="bg-teal-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${percent}%` }}
             />
           </div>
@@ -66,7 +83,7 @@ export default function NotApprovedStep({
           <button
             type="button"
             onClick={handleNew}
-            className="mt-8 w-full rounded-xl bg-slate-700 px-5 py-4 text-base font-semibold text-white hover:bg-slate-800"
+            className="mt-8 w-full rounded-xl bg-[#304f71] px-5 py-4 text-base font-semibold text-white hover:bg-slate-800"
           >
             New Application
           </button>
