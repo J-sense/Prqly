@@ -20,7 +20,7 @@ export default function ContactMethods() {
     },
   });
 
-  const [status, setStatus] = useState(null); // 'success' | 'error' | null
+  const [status, setStatus] = useState(null); 
 
   const onSubmit = async (data) => {
     setStatus(null);
@@ -31,8 +31,6 @@ export default function ContactMethods() {
       if (res.status === 201) {
         setStatus("success");
       }
-
-
       reset(); 
     } catch (e) {
       console.log(e);
