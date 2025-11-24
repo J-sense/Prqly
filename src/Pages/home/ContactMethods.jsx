@@ -32,7 +32,8 @@ export default function ContactMethods() {
         setStatus("success");
       }
 
-      reset(); // clears inputs
+
+      reset(); 
     } catch (e) {
       console.log(e);
       setStatus("error");
