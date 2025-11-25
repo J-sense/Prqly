@@ -1,38 +1,68 @@
 // ApprovedStep.jsx
-import React from "react";
 import { Check, Download } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import axiosBaseApi from "../axiosApi/baseApi";
 import Logo from "../ui/Logo";
-import { Link } from "react-router-dom";
 
-export default function ApprovedStep({
-  step = 4,
-  totalSteps = 4,
-  pdfUrl, // e.g. "/docs/preapproval.pdf" or a signed URL
-  fileName = "Preqly-Preapproval.pdf",
-  onDownload, // optional: custom download logic
-}) {
-  const percent = Math.round((step / totalSteps) * 100); // 100 at step 4
+export default function ApprovedStep({ step = 4, totalSteps = 4 }) {
+  const { state } = useLocation();
+  const percent = Math.round((step / totalSteps) * 100);
+  console.log(state);
 
-  const handleDownload = async () => {
-    if (typeof onDownload === "function") return onDownload();
+  const dawonLoadpdf = async () => {
+    try {
+      const payload = {
+        loan_application_id: state?.loan_application?.id,
+        loan_application: {
+          id: state?.loan_application?.id,
+          full_name: state?.loan_application?.full_name,
+          email: state?.loan_application?.email,
+          phone_number: state?.loan_application?.phone_number,
+          property_zip_code: state?.loan_application?.property_zip_code,
+          property_address: state?.loan_application?.property_address,
+          annual_income: state?.loan_application?.annual_income,
+          purchase_price: state?.loan_application?.purchase_price,
+          down_payment: state?.loan_application?.down_payment,
+          loan_purpose: state?.loan_application?.loan_purpose,
+          cash_out_amount: state?.loan_application?.cash_out_amount,
+        },
+        bank_accounts: [
+          {
+            account_id: state?.bank_accounts[0].account_id,
+            name: state?.bank_accounts[0].name,
+            official_name: state?.bank_accounts[0].official_name,
+            type: state?.bank_accounts[0].type,
+            subtype: state?.bank_accounts[0].subtype,
+            current_balance: state?.bank_accounts[0].current_balance,
+            available_balance: state?.bank_accounts[0].available_balance,
+            currency: state?.bank_accounts[0].currency,
+          },
+        ],
+        total_balance: state?.total_balance,
+        plaid_connected: state?.plaid_connected,
+        message: state?.message,
+      };
+      console.log(payload);
+      const res = await axiosBaseApi.post("/generate-pdf-from-data/", payload);
 
-    if (!pdfUrl) {
-      console.warn("No pdfUrl or onDownload provided.");
-      return;
+      // Check if the response is as expected
+      if (res.status === 200) {
+        console.log("PDF generated successfully:", res.data);
+
+        // If it's a file download, you can trigger the download here
+        const fileBlob = new Blob([res.data], { type: "application/pdf" });
+        const fileURL = URL.createObjectURL(fileBlob);
+        const link = document.createElement("a");
+        link.href = fileURL;
+        link.download = "generated-file.pdf"; // Optional: Set file name
+        link.click();
+      } else {
+        console.error("Failed to generate PDF:", res);
+      }
+    } catch (error) {
+      console.log(error);
     }
-    // simple client-side download for same-origin or CORS-enabled URLs
-    const res = await fetch(pdfUrl);
-    const blob = await res.blob();
-    const href = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = href;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(href);
   };
-
   return (
     <div className="font-popins">
       <div className="relative bg-white p-6">
@@ -89,8 +119,8 @@ export default function ApprovedStep({
           {/* Download button */}
           <button
             type="button"
-            onClick={handleDownload}
-            className="mt-8 w-full rounded-xl bg-[#304f71] px-5 py-4 text-base font-semibold text-white hover:bg-"
+            onClick={dawonLoadpdf}
+            className="mt-8 w-full rounded-xl bg-[#304f71] px-5 py-4 text-base font-semibold text-white hover:bg-[#243d57] transition-colors"
           >
             <div className="flex items-center justify-center gap-2">
               <Download className="h-5 w-5" />

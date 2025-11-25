@@ -18,7 +18,9 @@ export default function NotApprovedStep({
     // default behavior: clear any saved form and go back to Step 1
     try {
       sessionStorage.removeItem("preapproval_step1");
-    } catch {}
+    } catch {
+      console.log()
+    }
     navigate("/pre-approval");
   };
 

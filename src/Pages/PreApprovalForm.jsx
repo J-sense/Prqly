@@ -1,4 +1,4 @@
-"use client";
+
 
 import { jsPDF } from "jspdf"; // Import jsPDF
 import {

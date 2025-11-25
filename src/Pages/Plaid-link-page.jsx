@@ -14,14 +14,11 @@ export default function PlaidLinkPage() {
   const [linkToken, setLinkToken] = useState(searchParams.get("token") || "");
   const [loanId, setLoanId] = useState(searchParams.get("loan_id") || "");
   const [isProcessing, setIsProcessing] = useState(false);
-
- 
+   
   const handleMockPlaidConnect = async () => {
     setIsProcessing(true);
 
-
     await new Promise((resolve) => setTimeout(resolve, 2000));
-
 
     const mockPublicToken = `public-sandbox-${Math.random()
       .toString(36)
@@ -29,19 +26,16 @@ export default function PlaidLinkPage() {
 
     setIsProcessing(false);
 
-    // Redirect to bank page with public token and loan_id
     navigate(
       `/pre-approval/bank?public_token=${mockPublicToken}&loan_id=${loanId}`
     );
   };
 
-  // Real Plaid Link configuration (only used when MOCK_MODE = false)
   const { open, ready } = usePlaidLink({
     token: linkToken,
     onSuccess: (public_token, metadata) => {
       console.log("Plaid Success!", { public_token, metadata });
 
-      // Redirect to bank page instead of calling backend here
       navigate(
         `/pre-approval/bank?public_token=${public_token}&loan_id=${loanId}`
       );

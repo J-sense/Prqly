@@ -24,19 +24,20 @@ export default function PlaidConnectForm() {
 
   const percent = 50; // Step 2 of 4
   const handleBack = () => navigate("/pre-approval"); // Step 1
-  const handleSuccess = () => navigate("/pre-approval/connected"); // Step 3
 
   const onSubmit = (e) => {
     e.preventDefault();
-    handleSuccess();
   };
-  const connectWithPlaid = () => {
+  const connectWithPlaid = async () => {
     try {
-      const res = axiosBaseApi.post("/plaid/connect/", {
+      const res = await axiosBaseApi.post("/plaid/connect/", {
         public_token: publicToken,
         loan_application_id: loanId,
       });
       console.log(res);
+      if (res.status == 200) {
+        navigate("/pre-approval/connected", { state: res?.data });
+      }
     } catch (error) {
       console.log(error);
     }

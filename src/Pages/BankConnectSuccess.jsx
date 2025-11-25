@@ -1,8 +1,7 @@
 // BankConnectSuccess.jsx
-import React from "react";
-import { Check, Download } from "lucide-react";
+import { Check } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../ui/Logo";
-import { Link, useNavigate } from "react-router-dom";
 
 export default function BankConnectSuccess({
   step = 3,
@@ -13,6 +12,9 @@ export default function BankConnectSuccess({
   const navigate = useNavigate();
   const percent = Math.round((step / totalSteps) * 100); // or: const percent = 75;
 
+  const { state } = useLocation();
+  console.log(state);
+
   const handleBack = () => {
     if (typeof onBack === "function") return onBack();
     navigate("/pre-approval/bank");
@@ -20,9 +22,9 @@ export default function BankConnectSuccess({
 
   const handleContinue = () => {
     if (typeof onContinue === "function") return onContinue();
-    navigate("/pre-approval/approved");
+    navigate("/pre-approval/approved", { state: state });
   };
-
+  console.log(state);
   return (
     <div className="font-popins">
       <div className="relative bg-white p-6">
