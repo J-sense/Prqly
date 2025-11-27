@@ -14,7 +14,7 @@ export default function PlaidLinkPage() {
   const [linkToken, setLinkToken] = useState(searchParams.get("token") || "");
   const [loanId, setLoanId] = useState(searchParams.get("loan_id") || "");
   const [isProcessing, setIsProcessing] = useState(false);
-   
+
   const handleMockPlaidConnect = async () => {
     setIsProcessing(true);
 
@@ -115,19 +115,7 @@ export default function PlaidLinkPage() {
               </li>
               <li>Click "Open Plaid & Connect Bank" to start</li>
               <li>Select your bank and login with your credentials</li>
-              <li>
-                You'll be redirected to{" "}
-                <code className="bg-gray-200 px-1 rounded">
-                  /pre-approval/bank
-                </code>{" "}
-                with the public token
-              </li>
-              <li>
-                For <strong>Sandbox testing</strong>: Use any username/password,
-                phone{" "}
-                <code className="bg-gray-200 px-1 rounded">4155550123</code>,
-                code <code className="bg-gray-200 px-1 rounded">123456</code>
-              </li>
+              
             </ol>
           )}
         </div>

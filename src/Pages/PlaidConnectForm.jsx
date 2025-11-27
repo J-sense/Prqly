@@ -1,5 +1,5 @@
 // PlaidConnectForm.jsx
-import { Eye, EyeOff, Shield } from "lucide-react";
+import { Loader2, Shield } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axiosBaseApi from "../axiosApi/baseApi";
@@ -10,9 +10,7 @@ export default function PlaidConnectForm() {
   const publicToken = searchParams.get("public_token");
   const loanId = searchParams.get("loan_id");
   console.log(publicToken);
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
+
   const navigate = useNavigate();
 
   const verificationItems = [
@@ -22,13 +20,15 @@ export default function PlaidConnectForm() {
     "Asset verification",
   ];
 
-  const percent = 50; // Step 2 of 4
-  const handleBack = () => navigate("/pre-approval"); // Step 1
+  const percent = 50;
+  const [loading, setLoading] = useState(false);
+  const handleBack = () => navigate("/pre-approval");
 
   const onSubmit = (e) => {
     e.preventDefault();
   };
   const connectWithPlaid = async () => {
+    setLoading(true);
     try {
       const res = await axiosBaseApi.post("/plaid/connect/", {
         public_token: publicToken,
@@ -40,16 +40,14 @@ export default function PlaidConnectForm() {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
-
-  const input =
-    "w-full px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent";
 
   return (
     <div className="font-popins">
       <div className="relative bg-white p-6">
-        {/* Back Button */}
         <div className="absolute top-12 left-6 font-popins">
           <Link to="/">
             <button className="bg-gradient-to-r from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out">
@@ -58,24 +56,19 @@ export default function PlaidConnectForm() {
           </Link>
         </div>
 
-        {/* Logo centered */}
         <div className="flex justify-center items-center py-8">
           <Logo height="100" width="100" />
         </div>
 
-        {/* Divider */}
         <div className="py-2">
           <hr className="border-gray-300" />
         </div>
       </div>
       <div className="max-w-md mx-auto bg-white border border-gray-200 rounded-lg shadow-sm font-poppins">
-        {/* Header */}
         <div className="px-6 py-4 border-b border-gray-200">
           <div className="flex items-center justify-center mb-2">
             <h2 className="text-lg font-semibold text-gray-900">Preedy</h2>
           </div>
-
-          {/* Progress Bar */}
           <div className="mb-2">
             <div className="flex justify-between items-center text-sm text-gray-600 mb-1">
               <span>Step 2 of 4</span>
@@ -127,59 +120,10 @@ export default function PlaidConnectForm() {
                 </div>
               ))}
             </div>
-
-            {/* tiny Plaid badge placeholder */}
-            <div className="flex justify-end">
-              <div className="flex items-center gap-1 bg-gray-800 text-white px-2 py-1 rounded text-xs font-medium">
-                <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                  <span className="text-[10px] font-bold">P</span>
-                </div>
-                <span>Plaid</span>
-              </div>
-            </div>
           </div>
 
           {/* Sign in form */}
           <form className="space-y-4" onSubmit={onSubmit}>
-            <h3 className="font-semibold text-gray-900">
-              Sign in to your Plaid account
-            </h3>
-
-            <input
-              type="email"
-              placeholder="Email address"
-              className={input}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="email"
-              required={false} // keep minimal (no validation)
-            />
-
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                className={`${input} pr-10`}
-                value={pwd}
-                onChange={(e) => setPwd(e.target.value)}
-                autoComplete="current-password"
-                required={false}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((s) => !s)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                aria-label={showPassword ? "Hide password" : "Show password"}
-              >
-                {showPassword ? (
-                  <EyeOff className="w-5 h-5" />
-                ) : (
-                  <Eye className="w-5 h-5" />
-                )}
-              </button>
-            </div>
-
-            {/* Actions */}
             <div className="flex gap-3">
               <button
                 type="button"
@@ -191,10 +135,20 @@ export default function PlaidConnectForm() {
 
               <button
                 onClick={connectWithPlaid}
-                type="submit"
-                className="flex-1 bg-[#00583b] hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200"
+                type="button"
+                disabled={loading}
+                className={`flex-1 bg-[#00583b] hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200 flex items-center justify-center gap-2 ${
+                  loading ? "opacity-70 cursor-wait" : ""
+                }`}
               >
-                Connect With Plaid
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Connecting...
+                  </>
+                ) : (
+                  "Connect With Plaid"
+                )}
               </button>
             </div>
           </form>

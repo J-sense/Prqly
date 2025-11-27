@@ -1,5 +1,3 @@
-
-
 import { jsPDF } from "jspdf"; // Import jsPDF
 import {
   AlertCircle,
@@ -20,7 +18,7 @@ export default function PreApprovalForm() {
     handleSubmit,
     getValues,
     watch,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
       fullName: "",
@@ -65,8 +63,8 @@ export default function PreApprovalForm() {
       console.log(res);
       const { plaid_link_token, id } = res.data;
       navigate(`/plaid-link-page?token=${plaid_link_token}&loan_id=${id}`);
-    } catch (error) {
-      console.log(error);
+    } catch (errors) {
+      console.log(errors);
     }
   };
 
@@ -97,7 +95,7 @@ export default function PreApprovalForm() {
     // Save the PDF
     doc.save("pre-approval-form.pdf");
   };
-
+  console.log(errors);
   return (
     <div className="">
       <div className="relative bg-white p-6">
@@ -180,11 +178,19 @@ export default function PreApprovalForm() {
                 >
                   Full Name
                 </label>
+
                 <input
                   id="fullName"
-                  {...register("fullName")}
+                  {...register("fullName", {
+                    required: "Full name is required",
+                  })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 />
+                {errors?.fullName && (
+                  <p className="text-red-500 text-sm">
+                    {errors.fullName.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -197,9 +203,18 @@ export default function PreApprovalForm() {
                 <input
                   id="email"
                   type="email"
-                  {...register("email")}
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Enter a valid email",
+                    },
+                  })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 />
+                {errors?.email && (
+                  <p className="text-red-500 text-sm">{errors.email.message}</p>
+                )}
               </div>
 
               <div>
@@ -212,9 +227,16 @@ export default function PreApprovalForm() {
                 <input
                   id="phoneNumber"
                   type="tel"
-                  {...register("phoneNumber")}
+                  {...register("phoneNumber", {
+                    required: "Phone number is required",
+                  })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 />
+                {errors?.phoneNumber && (
+                  <p className="text-red-500 text-sm">
+                    {errors.phoneNumber.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -226,9 +248,16 @@ export default function PreApprovalForm() {
                 </label>
                 <input
                   id="propertyZipCode"
-                  {...register("propertyZipCode")}
+                  {...register("propertyZipCode", {
+                    required: "Zip code is required",
+                  })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 />
+                {errors?.propertyZipCode && (
+                  <p className="text-red-500 text-sm">
+                    {errors.propertyZipCode.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -240,9 +269,16 @@ export default function PreApprovalForm() {
                 </label>
                 <input
                   id="propertyAddress"
-                  {...register("propertyAddress")}
+                  {...register("propertyAddress", {
+                    required: "Property address is required",
+                  })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 />
+                {errors?.propertyAddress && (
+                  <p className="text-red-500 text-sm">
+                    {errors.propertyAddress.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -256,9 +292,20 @@ export default function PreApprovalForm() {
                   id="annualIncome"
                   type="number"
                   step="0.01"
-                  {...register("annualIncome")}
+                  {...register("annualIncome", {
+                    required: "Annual income is required",
+                    min: {
+                      value: 0,
+                      message: "Income must be a positive number",
+                    },
+                  })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 />
+                {errors?.annualIncome && (
+                  <p className="text-red-500 text-sm">
+                    {errors.annualIncome.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -272,9 +319,20 @@ export default function PreApprovalForm() {
                   id="purchasePrice"
                   type="number"
                   step="0.01"
-                  {...register("purchasePrice")}
+                  {...register("purchasePrice", {
+                    required: "Purchase price is required",
+                    min: {
+                      value: 0,
+                      message: "Purchase price must be positive",
+                    },
+                  })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 />
+                {errors?.purchasePrice && (
+                  <p className="text-red-500 text-sm">
+                    {errors.purchasePrice.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -288,9 +346,17 @@ export default function PreApprovalForm() {
                   id="downPayment"
                   type="number"
                   step="0.01"
-                  {...register("downPayment")}
+                  {...register("downPayment", {
+                    required: "Down payment is required",
+                    min: { value: 0, message: "Down payment must be positive" },
+                  })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 />
+                {errors?.downPayment && (
+                  <p className="text-red-500 text-sm">
+                    {errors.downPayment.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -327,9 +393,21 @@ export default function PreApprovalForm() {
                   id="cashOutAmount"
                   type="number"
                   step="0.01"
-                  {...register("cashOutAmount")}
+                  {...register("cashOutAmount", {
+                    min: { value: 0, message: "Amount must be positive" },
+                    validate: (val) =>
+                      loanPurpose === "HELOC"
+                        ? (val !== undefined && val !== "") ||
+                          "Cash-out amount required for HELOC"
+                        : true,
+                  })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 />
+                {errors?.cashOutAmount && (
+                  <p className="text-red-500 text-sm">
+                    {errors.cashOutAmount.message}
+                  </p>
+                )}
               </div>
 
               <button
