@@ -6,12 +6,11 @@ import Logo from "../ui/Logo";
 export default function BankConnectSuccess({
   step = 3,
   totalSteps = 4,
-  onBack, // optional: parent controls back
-  onContinue, // optional: parent controls continue
+  onBack, 
+  onContinue, 
 }) {
   const navigate = useNavigate();
-  const percent = Math.round((step / totalSteps) * 100); // or: const percent = 75;
-
+  const percent = Math.round((step / totalSteps) * 100);
   const { state } = useLocation();
   console.log(state);
 
