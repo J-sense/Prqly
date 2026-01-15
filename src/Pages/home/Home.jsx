@@ -5,7 +5,8 @@ import HowItWorks from "./HowItWorks";
 import TestimonialsSlider from "./TestimonialsSlider";
 import PreApprovalCTA from "./PreApprovalCTA";
 import FAQ from "./Faq";
-import ContactMethods from "./contactMethods";
+import ContactMethods from "./ContactMethods";
+
 // import ContactMethods from "./ContactMethods";
 // import Benifits from "./Benifits";
 
