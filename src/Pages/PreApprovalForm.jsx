@@ -98,30 +98,28 @@ export default function PreApprovalForm() {
   console.log(errors);
   return (
     <div className="">
-      <div className="relative bg-white p-6">
+      <div className="relative bg-white p-2 border border-gray-300">
         {/* Back Button */}
-        <div className="absolute top-12 left-6 font-popins">
+        <div className="absolute p-5 font-popins">
           <Link to="/">
-            <button className="bg-gradient-to-r from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out">
+            <button className="bg-gradient-to-r  from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out">
               Back to Home
             </button>
           </Link>
         </div>
 
         {/* Logo centered */}
-        <div className="flex justify-center items-center py-8">
+        <div className="hidden md:flex justify-center items-center py-8">
           <Logo height="100" width="100" />
         </div>
 
         {/* Divider */}
-        <div className="py-2">
-          <hr className="border-gray-300" />
-        </div>
+       
       </div>
 
       {/* Back to Home Button */}
 
-      <div className="min-h-screen font-popins border border-gray-300 rounded-sm p-6 mx-auto max-w-md">
+      <div className="min-h-screen font-popins border my-7 rounded-md border-gray-300 p-6 mx-auto max-w-md">
         <div className="max-w-md mx-auto bg-white my-6">
           <div className="px-6 pt-6 pb-4">
             <div className="flex justify-between items-center text-sm text-gray-600 mb-2">
@@ -139,14 +137,14 @@ export default function PreApprovalForm() {
           <div className="px-6 pb-6">
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-xl font-semibold text-gray-900">
-                Get Pre-Approved in 90 Second!
+                Get Pre-Approved in 90 Seconds!
               </h1>
               <button
                 type="button"
                 onClick={handleDownloadPdf}
                 className="p-2 text-gray-500 hover:text-gray-700"
               >
-                <Download className="w-5 h-5" />
+                {/* <Download className="w-5 h-5" /> */}
               </button>
             </div>
 
