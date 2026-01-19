@@ -7,7 +7,10 @@ const Logo = ({ width = "100px", height = "100px", alt = "Logo" }) => {
       <img
         src={logo} // Replace with the actual path to your logo image
         alt={alt}
-        style={{ width: width, height: height }} // Dynamically set width and height
+        style={{ width: width, height: height }}
+        className="object-contain"
+        
+         // Dynamically set width and height
       />
     </Link>
   );

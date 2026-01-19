@@ -1,11 +1,5 @@
 import { jsPDF } from "jspdf"; // Import jsPDF
-import {
-  AlertCircle,
-  CheckCircle,
-  ChevronDown,
-  Download,
-  Loader2,
-} from "lucide-react";
+import { AlertCircle, CheckCircle, ChevronDown, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -35,6 +29,7 @@ export default function PreApprovalForm() {
   });
 
   const [status, setStatus] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [progress, setProgress] = useState(50);
   const navigate = useNavigate();
   const loanPurposeOptions = [
@@ -98,28 +93,44 @@ export default function PreApprovalForm() {
   console.log(errors);
   return (
     <div className="">
-      <div className="relative bg-white p-2 border border-gray-300">
-        {/* Back Button */}
-        <div className="absolute p-5 font-popins">
-          <Link to="/">
-            <button className="bg-gradient-to-r  from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out">
-              Back to Home
-            </button>
-          </Link>
-        </div>
+      <div className="relative bg-white p-8 border-b border-gray-300">
+        <div className="max-w-7xl mx-auto flex items-center justify-between md:justify-center relative">
+          {/* Back Button - Absolute on desktop, relative flow on mobile to prevent overlap */}
+          <div className="md:absolute md:left-0">
+            <Link to="/">
+              <button
+                className="
+            bg-gradient-to-r from-teal-400 to-teal-500 
+            hover:from-teal-500 hover:to-teal-600 
+            text-white font-semibold 
+            text-xs sm:text-sm md:text-base 
+            py-1.5 px-3 sm:py-2 sm:px-12 
+            rounded-full shadow-md hover:shadow-lg
+            transition-all duration-300 ease-in-out
+            whitespace-nowrap
+          "
+              >
+             
+                <span className="xs:hidden">Back</span>
+              </button>
+            </Link>
+          </div>
 
-        {/* Logo centered */}
-        <div className="hidden md:flex justify-center items-center py-8">
-          <Logo height="100" width="100" />
-        </div>
+          {/* Logo - Centered on all devices */}
+          <div className="flex justify-center items-center">
+            <div className="scale-75 sm:scale-90 md:scale-100">
+              <Logo height="80" width="80" />
+            </div>
+          </div>
 
-        {/* Divider */}
-       
+          {/* Empty div for flex balance on mobile (keeps logo centered) */}
+          <div className="md:hidden w-[60px] sm:w-[100px]"></div>
+        </div>
       </div>
 
       {/* Back to Home Button */}
 
-      <div className="min-h-screen font-popins border my-7 rounded-md border-gray-300 p-6 mx-auto max-w-md">
+      <div className="min-h-screen font-popins border my-7 rounded-md border-gray-300 p-6 mx-4 md:mx-auto max-w-md">
         <div className="max-w-md mx-auto bg-white my-6">
           <div className="px-6 pt-6 pb-4">
             <div className="flex justify-between items-center text-sm text-gray-600 mb-2">
@@ -134,9 +145,9 @@ export default function PreApprovalForm() {
             </div>
           </div>
 
-          <div className="px-6 pb-6">
+          <div className="px-2 pb-6">
             <div className="flex items-center justify-between mb-6">
-              <h1 className="text-xl font-semibold text-gray-900">
+              <h1 className="text-md md:text-xl font-semibold text-gray-900">
                 Get Pre-Approved in 90 Seconds!
               </h1>
               <button
@@ -149,7 +160,7 @@ export default function PreApprovalForm() {
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
               {/* Status messages */}
               {status === "success" && (
                 <div className="flex items-center gap-2 p-3 bg-green-50 border border-green-200 rounded-md">
