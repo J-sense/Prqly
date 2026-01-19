@@ -10,7 +10,7 @@ const testimonials = [
     quote:
       "I Usually Dread Paperwork, But This Platform Made It Effortless. Everything Was Online, Fast, And Accurate!",
     image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-4cUuElTx0CKTEV9AWnVvv1l8Ecmwqs.png",
+      "/firstOne.jpg",
   },
   {
     id: 2,
@@ -66,8 +66,8 @@ export default function Testimonials() {
             <div className="p-8 md:p-12">
               <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
                 {/* Image */}
-                <div className="flex-shrink-0">
-                  <div className="w-48 h-48 md:w-64 md:h-64 rounded-lg overflow-hidden bg-gray-100">
+                <div className="">
+                  <div className="w-48 h-48 md:w-64 md:h-64 rounded-lg overflow-hidden ">
                     <img
                       src={currentTestimonial.image || "/placeholder.svg"}
                       alt={currentTestimonial.name}
