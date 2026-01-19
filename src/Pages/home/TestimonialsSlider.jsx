@@ -18,7 +18,7 @@ const testimonials = [
     title: "First-Time Buyer",
     quote:
       "The team guided me through every step of the process. I couldn't have asked for a better experience!",
-    image: "/professional-man-smiling.png",
+    image: "/michel.jpg",
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const testimonials = [
     title: "Investment Property Owner",
     quote:
       "Their expertise in investment properties helped me build a portfolio I never thought possible.",
-    image: "/professional-businesswoman.png",
+    image: "/larah.jpg",
   },
 ];
 

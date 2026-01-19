@@ -56,7 +56,7 @@ export default function ContactMethods() {
         </svg>
       ),
       title: "Email Us",
-      contact: "hello@company.com",
+      contact: "info@preqly.com",
       description: "Get in touch for general inquiries",
     },
     {

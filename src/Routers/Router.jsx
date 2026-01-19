@@ -9,7 +9,7 @@ import PreApprovalForm from "../Pages/PreApprovalForm";
 import Terms from "../Pages/Terms";
 
 import ApprovedStep from "../Pages/ApprovedStep.jsx";
-import BankConnectSuccess from "../Pages/BankConnectSuccess.JSX";
+import BankConnectSuccess from "../Pages/BankConnectSuccess.jsx";
 import NotApprovedStep from "../Pages/NotApprovedStep.jsx";
 import PlaidLinkPage from "../Pages/Plaid-link-page";
 
