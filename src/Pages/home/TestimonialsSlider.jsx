@@ -1,7 +1,7 @@
-"use client";
-
 import { useState } from "react";
-
+import imgOne from "../../assets/firstOne.jpg"
+import imgTwo from "../../assets/larah.jpg"
+import imgthree from "../../assets/michel.jpg"
 const testimonials = [
   {
     id: 1,
@@ -9,8 +9,8 @@ const testimonials = [
     title: "Repeat Buyer",
     quote:
       "I Usually Dread Paperwork, But This Platform Made It Effortless. Everything Was Online, Fast, And Accurate!",
-    image:
-      "/firstOne.jpg",
+    image:imgOne
+    
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const testimonials = [
     title: "First-Time Buyer",
     quote:
       "The team guided me through every step of the process. I couldn't have asked for a better experience!",
-    image: "/michel.jpg",
+    image: imgTwo,
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const testimonials = [
     title: "Investment Property Owner",
     quote:
       "Their expertise in investment properties helped me build a portfolio I never thought possible.",
-    image: "/larah.jpg",
+    image: imgthree,
   },
 ];
 
