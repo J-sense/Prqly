@@ -216,7 +216,7 @@ export default function ContactMethods() {
                     Phone
                   </label>
                   <input
-                    type="tel"
+                    type="number"
                     placeholder="Phone"
                     {...register("phone", {
                       required: "Phone number is required",

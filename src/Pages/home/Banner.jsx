@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 import bg from "../../assets/banner.png";
 
 export default function HeroBanner({
-  title = "Get a Pre-Approval in 90 Seconds",
-  subtitle = "Fast, secure, and personalized mortgage pre-approvals tailored to your financial profile",
-  ctaText = "Get Pre-Approval Now",
+  title = "The Future Of Home Buying is Instant.",
+  subtitle = "Preqly leverages AI to deliver rock-solid mortgage pre-approvals in minutes, not days. Give your offer the competitive edge it deserves.",
+  ctaText = "Get Pre-Approved Now",
   ctaTo = "/get-pre-approved",
 }) {
   return (
     <section className="relative isolate overflow-hidden font-poppins" id="/">
-      
       <img
         src={bg}
         alt=""
@@ -29,7 +28,7 @@ export default function HeroBanner({
               {title}
             </h1>
 
-            <p className="mx-auto mt-6 max-w-3xl text-base sm:text-lg md:text-[22px] text-[#b8b9cd] font-poppins ">
+            <p className="mx-auto mt-6 max-w-4xl text-base sm:text-lg md:text-[22px] text-[#b8b9cd] font-poppins ">
               {subtitle}
             </p>
 

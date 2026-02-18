@@ -6,6 +6,8 @@ import TestimonialsSlider from "./TestimonialsSlider";
 import PreApprovalCTA from "./PreApprovalCTA";
 import FAQ from "./Faq";
 import ContactMethods from "./ContactMethods";
+import AboutUs from "./AboutUs";
+import AgentsSection from "./AgenticSection";
 
 // import ContactMethods from "./ContactMethods";
 // import Benifits from "./Benifits";
@@ -14,8 +16,10 @@ export const Home = () => {
   return (
     <div className="mt-[60px] font-popins">
       <HeroBanner />
+      {/* <AboutUs /> */}
       <Benefits />
       <HowItWorks />
+      {/* <AgentsSection /> */}
       <TestimonialsSlider />
       <PreApprovalCTA />
       <FAQ />

@@ -30,7 +30,7 @@ export default function PreApprovalForm() {
 
   const [status, setStatus] = useState(null);
   // eslint-disable-next-line no-unused-vars
-  const [progress, setProgress] = useState(50);
+  const [progress, setProgress] = useState(25);
   const navigate = useNavigate();
   const loanPurposeOptions = [
     { value: "Purchase", label: "Purchase" },
@@ -132,14 +132,14 @@ export default function PreApprovalForm() {
 
       <div className="min-h-screen font-popins border my-7 rounded-md border-gray-300 p-6 mx-4 md:mx-auto max-w-md">
         <div className="max-w-md mx-auto bg-white my-6">
-          <div className="px-6 pt-6 pb-4">
+          <div className="px-2 pt-6 pb-4">
             <div className="flex justify-between items-center text-sm text-gray-600 mb-2">
               <span>Step 1 of 4</span>
-              <span>50% Complete</span>
+              <span>25% Complete</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
+            <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
               <div
-                className="bg-teal-500 h-2 rounded-full transition-all duration-300"
+                className="bg-teal-500 h-3 rounded-full transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -235,7 +235,7 @@ export default function PreApprovalForm() {
                 </label>
                 <input
                   id="phoneNumber"
-                  type="tel"
+                  type="number"
                   {...register("phoneNumber", {
                     required: "Phone number is required",
                   })}
@@ -257,6 +257,7 @@ export default function PreApprovalForm() {
                 </label>
                 <input
                   id="propertyZipCode"
+                  type="number"
                   {...register("propertyZipCode", {
                     required: "Zip code is required",
                   })}
