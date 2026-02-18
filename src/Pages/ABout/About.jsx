@@ -1,4 +1,3 @@
-import React from "react";
 import img from "../../assets/house.png";
 import PreApprovalCTA from "../home/PreApprovalCTA";
 export const About = () => {
@@ -48,7 +47,8 @@ export const About = () => {
                   We’re revolutionizing the mortgage industry with AI-powered
                   pre-approvals that give homebuyers the speed and certainty
                   they need in today’s competitive market. Pre-approvals that
-                  give…
+                  give buyers the power of an immediate 'yes' and the confidence
+                  to close without compromise.
                 </p>
               </div>
 
