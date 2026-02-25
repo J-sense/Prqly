@@ -118,7 +118,7 @@ export default function Header() {
               </button>
             ))}
             <button
-              onClick={() => handleNavClick("#get-pre-approved")}
+              onClick={() => handleNavClick("/pre-approval")}
               className="w-full inline-flex items-center justify-center px-6 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold text-sm hover:bg-yellow-300 transition-all duration-200"
             >
               Get Pre-Approved
