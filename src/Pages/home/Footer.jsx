@@ -3,6 +3,7 @@
 
 import React, { useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Logo from "../../ui/Logo";
 
 export default function Footer({ homePath = "/" }) {
   const navigate = useNavigate();
@@ -59,20 +60,16 @@ export default function Footer({ homePath = "/" }) {
     "text-white/80 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded";
 
   return (
-    <footer className="bg-[#2B4A67] text-white/90 font-popins">
+    <footer className="bg-[#1D2D60] text-white/90 font-popins">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         {/* Top grid */}
         <div className="py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="flex flex-col items-center lg:items-start gap-3">
             <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
-                <span className="h-2.5 w-2.5 rounded-full bg-blue-400" />
-                <span className="h-2.5 w-2.5 rounded-full bg-indigo-400" />
-              </span>
+           
               <Link to="/" className="text-2xl font-semibold tracking-wide">
-                Preqly<span className="align-super text-[10px] ml-0.5">™</span>
+                <Logo />
               </Link>
             </div>
           </div>

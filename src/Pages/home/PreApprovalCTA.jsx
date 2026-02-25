@@ -1,5 +1,4 @@
 // PreApprovalCTA.jsx
-import React from "react";
 import { Link } from "react-router-dom";
 
 export default function PreApprovalCTA({
@@ -23,7 +22,7 @@ export default function PreApprovalCTA({
           <div className="mt-7">
             <Link
               to={ctaTo}
-              className="inline-flex items-center justify-center rounded-2xl bg-[#304F71] px-6 py-3 text-sm sm:text-base font-semibold text-white shadow-md shadow-slate-900/10 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 transition"
+              className="inline-flex items-center justify-center rounded-2xl bg-[#1D2D60] px-6 py-3 text-sm sm:text-base font-semibold text-white shadow-md shadow-slate-900/10 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 transition"
             >
               {ctaText}
             </Link>

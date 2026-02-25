@@ -20,7 +20,7 @@ export default function ContactMethods() {
     },
   });
 
-  const [status, setStatus] = useState(null); 
+  const [status, setStatus] = useState(null);
 
   const onSubmit = async (data) => {
     setStatus(null);
@@ -31,7 +31,7 @@ export default function ContactMethods() {
       if (res.status === 201) {
         setStatus("success");
       }
-      reset(); 
+      reset();
     } catch (e) {
       console.log(e);
       setStatus("error");
@@ -56,7 +56,7 @@ export default function ContactMethods() {
         </svg>
       ),
       title: "Email Us",
-      contact: "info@preqly.com",
+      contact: "hello@preqly.com",
       description: "Get in touch for general inquiries",
     },
     {
@@ -72,26 +72,6 @@ export default function ContactMethods() {
             strokeLinejoin="round"
             strokeWidth={2}
             d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-          />
-        </svg>
-      ),
-      title: "Call Us",
-      contact: "1-800-PREQLY",
-      description: "Mon–Fri 9AM–6PM EST",
-    },
-    {
-      icon: (
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
           />
         </svg>
       ),
@@ -111,14 +91,34 @@ export default function ContactMethods() {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth={2}
-            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
           />
         </svg>
       ),
       title: "Office",
-      contact: "San Francisco, CA",
+      contact: "Downtown Birmingham Michigan",
       description: "Headquarters in the heart of fintech",
     },
+    // {
+    //   icon: (
+    //     <svg
+    //       className="w-6 h-6"
+    //       fill="none"
+    //       stroke="currentColor"
+    //       viewBox="0 0 24 24"
+    //     >
+    //       <path
+    //         strokeLinecap="round"
+    //         strokeLinejoin="round"
+    //         strokeWidth={2}
+    //         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+    //       />
+    //     </svg>
+    //   ),
+    //   title: "Office",
+    //   contact: "San Francisco, CA",
+    //   description: "Headquarters in the heart of fintech",
+    // },
   ];
 
   const baseInput =
@@ -143,7 +143,7 @@ export default function ContactMethods() {
             {contactMethods.map((m, i) => (
               <div
                 key={i}
-                className="bg-[#43678e] text-white p-6 rounded-lg shadow-lg hover:bg-blue-700 transition-colors"
+                className="bg-[#1D2D60] text-white p-6 rounded-3xl shadow-lg hover:bg-blue-700 transition-colors"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex-shrink-0">{m.icon}</div>
@@ -296,7 +296,7 @@ export default function ContactMethods() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-1/2 bg-[#43678e] text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-1/2 bg-[#1D2D60] text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? "SENDING..." : "SEND MESSAGE"}
                 </button>

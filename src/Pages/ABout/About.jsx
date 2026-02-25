@@ -1,30 +1,7 @@
 import img from "../../assets/house.png";
 import PreApprovalCTA from "../home/PreApprovalCTA";
 export const About = () => {
-  const teamMembers = [
-    {
-      id: 1,
-      name: "Sarah Chen",
-      title: "Senior Loan Officer",
-      description: "Former VP at BetterLoan with 10+ years in mortgage tech",
-      avatar: "👩‍💼",
-    },
-    {
-      id: 2,
-      name: "Michael Rodriguez",
-      title: "CTO & Co-Founder",
-      description: "Ex-Plaid engineer, AI/ML specialist in financial services",
-      avatar: "👨‍💻",
-    },
-    {
-      id: 3,
-      name: "David Kim",
-      title: "Head of Lending",
-      description:
-        "Licensed mortgage professional, 15+ years industry experience",
-      avatar: "👨‍💼",
-    },
-  ];
+ 
   const stats = [
     { value: "90s", note: "Average approval time" },
     { value: "0", note: "Documents required" },
@@ -114,7 +91,7 @@ export const About = () => {
             </div>
           </div>
         </section>
-        <section className="py-16 px-4 bg-white">
+        {/* <section className="py-16 px-4 bg-white">
           <div className="">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-left">
               Meet Our Team
@@ -143,7 +120,7 @@ export const About = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
       </div>
       <div className="mb-5">
         <PreApprovalCTA />

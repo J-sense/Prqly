@@ -1,16 +1,14 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/Logo.png";
 
-const Logo = ({ width = "100px", height = "100px", alt = "Logo" }) => {
+const Logo = ({ width = "", height = "px", alt = "Logo" }) => {
   return (
     <Link to="/">
       <img
-        src={logo} // Replace with the actual path to your logo image
+        src={"/Preqly Logo 1.png"} // Replace with the actual path to your logo image
         alt={alt}
         style={{ width: width, height: height }}
-        className="object-contain"
-        
-         // Dynamically set width and height
+        className="object-contain h-28 w-28"
+        // Dynamically set width and height
       />
     </Link>
   );

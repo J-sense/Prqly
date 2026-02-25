@@ -4,8 +4,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        Poly: ["Poly", "serif"],
-        popins: ['"Poppins"', "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["Poppins", "sans-serif"],
+        serif: ["Lora", "serif"],
+        mono: ["Source Code Pro", "monospace"],
+        ui: ["Source Sans 3", "sans-serif"],
       },
       colors: {
         primary: {

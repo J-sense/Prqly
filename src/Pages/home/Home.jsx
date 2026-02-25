@@ -8,6 +8,7 @@ import FAQ from "./Faq";
 import ContactMethods from "./ContactMethods";
 import AboutUs from "./AboutUs";
 import AgentsSection from "./AgenticSection";
+import AboutSection from "./AboutSection";
 
 // import ContactMethods from "./ContactMethods";
 // import Benifits from "./Benifits";
@@ -19,6 +20,7 @@ export const Home = () => {
       {/* <AboutUs /> */}
       <Benefits />
       <HowItWorks />
+      <AboutSection/>
       {/* <AgentsSection /> */}
       <TestimonialsSlider />
       <PreApprovalCTA />
