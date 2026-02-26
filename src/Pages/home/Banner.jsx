@@ -7,6 +7,7 @@ export default function HeroBanner() {
       style={{
         backgroundImage: `url(${image})`,
       }}
+      id="home"
     >
       {/* Content Container */}
       <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 ">

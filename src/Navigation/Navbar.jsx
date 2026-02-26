@@ -1,36 +1,51 @@
 "use client";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "../ui/Logo";
+
 export default function Header() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation(); // পেজ লোকেশন ট্র্যাক করার জন্য
+
   const nav = [
-    { label: "Home", href: "#/" },
+    { label: "Home", href: "#home" },
     { label: "How It Works", href: "#how-it-works" },
-    { label: "About", href: "/about" }, // separate page
+    { label: "About", href: "/about" },
     { label: "Contact", href: "#contact" },
   ];
 
- const handleNavClick = (href) => {
-    // Route navigation
+  const handleNavClick = (href) => {
     if (href.startsWith("/")) {
       navigate(href);
       setOpen(false);
       return;
     }
-
-    // Section scrolling
     if (href.startsWith("#")) {
       const id = href.replace("#", "");
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (location.pathname !== "/") {
+        navigate("/", { state: { targetId: id } });
+      } else {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
       }
     }
-
     setOpen(false);
   };
+  useEffect(() => {
+    if (location.pathname === "/" && location.state?.targetId) {
+      const id = location.state.targetId;
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        window.history.replaceState({}, document.title);
+      }, 100);
+    }
+  }, [location]);
 
   return (
     <header className="sticky top-0 z-50 font-sans ">
@@ -40,8 +55,6 @@ export default function Header() {
           <div className="pt-20">
             <Logo />
           </div>
-
-          {/* Desktop Nav */}
           <nav className="hidden md:flex gap-8 pt-20">
             {nav.map((item) => (
               <button
@@ -53,8 +66,6 @@ export default function Header() {
               </button>
             ))}
           </nav>
-
-          {/* Desktop CTA */}
           <div className="hidden md:flex mt-20">
             <button
               onClick={() => handleNavClick("/pre-approval")}
@@ -63,8 +74,6 @@ export default function Header() {
               Get Pre-Approved
             </button>
           </div>
-
-          {/* Mobile Hamburger */}
           <button
             className="md:hidden mt-20 inline-flex h-10 w-10 items-center justify-center rounded-md border border-gray-200 bg-white text-gray-700"
             onClick={() => setOpen(!open)}
@@ -103,8 +112,6 @@ export default function Header() {
           </button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
       {open && (
         <div className="md:hidden border-t border-gray-100 bg-white shadow-sm">
           <nav className="flex flex-col gap-3 p-4">
