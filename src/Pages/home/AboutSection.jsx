@@ -36,7 +36,7 @@ export default function AboutUs() {
               For Real Estate Agents
             </h2>
             <p className="text-lg text-gray-500">
-              Closer Faster with Preqly-Certified Buyers.
+              Close Faster with Preqly-Certified Buyers.
             </p>
           </div>
 

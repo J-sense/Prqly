@@ -1,32 +1,32 @@
 import { useState } from "react";
-import imgOne from "../../assets/firstOne.jpg"
-import imgTwo from "../../assets/larah.jpg"
-import imgthree from "../../assets/michel.jpg"
+import imgOne from "../../assets/firstOne.jpg";
+import imgTwo from "../../assets/larah.jpg";
+import imgthree from "../../assets/michel.jpg";
 const testimonials = [
-  {
-    id: 1,
-    name: "Priya K.",
-    title: "Repeat Buyer",
-    quote:
-      "I Usually Dread Paperwork, But This Platform Made It Effortless. Everything Was Online, Fast, And Accurate!",
-    image:imgOne
-    
-  },
   {
     id: 2,
     name: "Michael R.",
     title: "First-Time Buyer",
     quote:
       "The team guided me through every step of the process. I couldn't have asked for a better experience!",
-    image: imgTwo,
+    image: imgthree,
   },
+  {
+    id: 1,
+    name: "Priya K.",
+    title: "Repeat Buyer",
+    quote:
+      "I Usually Dread Paperwork, But This Platform Made It Effortless. Everything Was Online, Fast, And Accurate!",
+    image: imgOne,
+  },
+
   {
     id: 3,
     name: "Sarah L.",
     title: "Investment Property Owner",
     quote:
       "Their expertise in investment properties helped me build a portfolio I never thought possible.",
-    image: imgthree,
+    image: imgTwo,
   },
 ];
 
@@ -35,13 +35,13 @@ export default function Testimonials() {
 
   const nextTestimonial = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1,
     );
   };
 
   const prevTestimonial = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1,
     );
   };
 

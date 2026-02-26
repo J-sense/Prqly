@@ -97,7 +97,7 @@ export default function ContactMethods() {
       ),
       title: "Office",
       contact: "Downtown Birmingham Michigan",
-      description: "Headquarters in the heart of fintech",
+      description: "headquarters",
     },
     // {
     //   icon: (

@@ -48,7 +48,7 @@ export default function Header() {
   }, [location]);
 
   return (
-    <header className="sticky top-0 z-50 font-sans ">
+    <header className="relative top-0 z-50 font-sans ">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Logo */}
