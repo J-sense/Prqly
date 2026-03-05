@@ -5,7 +5,7 @@ export default function AboutUs() {
     <section id="about" className="py-20 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* About Us Section */}
-        <div className="mb-20">
+        <div className="mb-32">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
               About Us
@@ -20,15 +20,14 @@ export default function AboutUs() {
               At Preqly, we believe the traditional mortgage process is broken.
               Waiting days for a loan officer to review paperwork can mean the
               difference between winning your dream home and losing out to a
-              faster bidder.We've built a bridge between sophisticated AI
+              faster bidder. We've built a bridge between sophisticated AI
               technology and the real estate market. By automating the heavy
               lifting of financial verification, we empower buyers to move with
-              confidence of cash, backed by the precision of data.You can now
-              copy-paste it directly wherever you need it.
+              confidence of cash, backed by the precision of data. You can now
+              move forward with speed and certainty.
             </p>
           </div>
         </div>
-
         {/* For Real Estate Agents Section */}
         <div className="border-t pt-20">
           <div className="text-center mb-12">
@@ -49,10 +48,10 @@ export default function AboutUs() {
                 power, reducing fall-out rates and speeding up the journey to
                 the closing table.
               </p>
-              <p className="text-lg text-gray-700 leading-relaxed">
+              {/* <p className="text-lg text-gray-700 leading-relaxed">
                 Feel free to copy it directly! Let me know if you need any
                 adjustments.
-              </p>
+              </p> */}
             </div>
 
             {/* Right Image */}

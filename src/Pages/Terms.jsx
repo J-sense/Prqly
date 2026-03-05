@@ -1,8 +1,9 @@
 import terms from "../assets/terms.png";
+
 export default function Terms() {
   return (
-    <section className="py-16 font-popins px-4 md:px-0">
-      <div className="max-w-[1640px] mx-auto">
+    <section className="py-28 font-popins px-4 sm:px-0">
+      <div className="max-w-[1640px] ml-auto">
         <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
           Terms of Service
         </h2>

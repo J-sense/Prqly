@@ -1,5 +1,5 @@
-import { jsPDF } from "jspdf"; // Import jsPDF
-import { AlertCircle, CheckCircle, ChevronDown, Loader2 } from "lucide-react";
+import { jsPDF } from "jspdf";
+import { AlertCircle, ChevronDown, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ export default function PreApprovalForm() {
     handleSubmit,
     getValues,
     watch,
+    setValue, // Added setValue to handle manual formatting
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -29,37 +30,52 @@ export default function PreApprovalForm() {
   });
 
   const [status, setStatus] = useState(null);
-  // eslint-disable-next-line no-unused-vars
   const [progress, setProgress] = useState(25);
   const navigate = useNavigate();
+
   const loanPurposeOptions = [
     { value: "Purchase", label: "Purchase" },
     { value: "Refinance", label: "Refinance" },
     { value: "HELOC", label: "HELOC" },
   ];
 
+  // Helper to format as commas while typing
+  const handleInputFormatting = (e, fieldName) => {
+    const rawValue = e.target.value.replace(/\D/g, "");
+    const formattedValue = rawValue ? Number(rawValue).toLocaleString() : "";
+    setValue(fieldName, formattedValue);
+  };
+
   const onSubmit = async (data) => {
-    console.log(data);
     setStatus(null);
+
+    // API-তে পাঠানোর আগে কমা সরিয়ে ফেলুন (Clean data for backend)
+    const cleanData = {
+      ...data,
+      annual_income: Number(data.annualIncome.replace(/,/g, "")),
+      purchase_price: Number(data.purchasePrice.replace(/,/g, "")),
+      down_payment: Number(data.downPayment.replace(/,/g, "")),
+      cash_out_amount: Number(data.cashOutAmount.replace(/,/g, "")),
+    };
 
     try {
       const res = await axiosBaseApi.post("/loan-application/", {
-        full_name: data?.fullName,
-        email: data?.email,
-        phone_number: data?.phoneNumber,
-        property_zip_code: data?.propertyZipCode,
-        property_address: data?.propertyAddress,
-        annual_income: data?.annualIncome,
-        purchase_price: data?.purchasePrice,
-        down_payment: data?.downPayment,
-        loan_purpose: data?.loanPurpose,
-        cash_out_amount: data?.cashOutAmount,
+        full_name: cleanData.fullName,
+        email: cleanData.email,
+        phone_number: cleanData.phoneNumber,
+        property_zip_code: cleanData.propertyZipCode,
+        property_address: cleanData.propertyAddress,
+        annual_income: cleanData.annual_income,
+        purchase_price: cleanData.purchase_price,
+        down_payment: cleanData.down_payment,
+        loan_purpose: cleanData.loanPurpose,
+        cash_out_amount: cleanData.cash_out_amount,
       });
-      console.log(res);
       const { plaid_link_token, id } = res.data;
       navigate(`/plaid-link-page?token=${plaid_link_token}&loan_id=${id}`);
-    } catch (errors) {
-      console.log(errors);
+    } catch (err) {
+      console.log(err);
+      setStatus("error");
     }
   };
 
@@ -67,14 +83,9 @@ export default function PreApprovalForm() {
 
   const handleDownloadPdf = () => {
     const data = getValues();
-
-    // Create new PDF instance
     const doc = new jsPDF();
-
-    // Add content to PDF
     doc.setFontSize(16);
     doc.text("Pre-Approval Form", 20, 20);
-
     doc.setFontSize(12);
     doc.text(`Full Name: ${data.fullName}`, 20, 30);
     doc.text(`Email: ${data.email}`, 20, 40);
@@ -86,49 +97,63 @@ export default function PreApprovalForm() {
     doc.text(`Down Payment: $${data.downPayment}`, 20, 100);
     doc.text(`Loan Purpose: ${data.loanPurpose}`, 20, 110);
     doc.text(`Cash-Out Amount: $${data.cashOutAmount}`, 20, 120);
-
-    // Save the PDF
     doc.save("pre-approval-form.pdf");
   };
-  console.log(errors);
+
+  // Reusable Currency Input Component (to keep JSX clean)
+  const CurrencyInput = ({
+    id,
+    label,
+    fieldName,
+    requiredMsg,
+    validation = {},
+  }) => (
+    <div>
+      <label
+        htmlFor={id}
+        className="block text-sm font-medium text-gray-700 mb-2"
+      >
+        {label}
+      </label>
+      <div className="relative">
+        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+          $
+        </span>
+        <input
+          id={id}
+          type="text"
+          {...register(fieldName, {
+            required: requiredMsg,
+            onChange: (e) => handleInputFormatting(e, fieldName),
+            ...validation,
+          })}
+          className="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+        />
+      </div>
+      {errors?.[fieldName] && (
+        <p className="text-red-500 text-sm mt-1">{errors[fieldName].message}</p>
+      )}
+    </div>
+  );
+
   return (
     <div className="">
+      {/* Header section remains same */}
       <div className="relative bg-white p-8 border-b border-gray-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between md:justify-center relative">
-          {/* Back Button - Absolute on desktop, relative flow on mobile to prevent overlap */}
           <div className="md:absolute md:left-0">
             <Link to="/">
-              <button
-                className="
-            bg-gradient-to-r from-teal-400 to-teal-500 
-            hover:from-teal-500 hover:to-teal-600 
-            text-white font-semibold 
-            text-xs sm:text-sm md:text-base 
-            py-1.5 px-3 sm:py-2 sm:px-12 
-            rounded-full shadow-md hover:shadow-lg
-            transition-all duration-300 ease-in-out
-            whitespace-nowrap
-          "
-              >
-             
+              <button className="bg-gradient-to-r from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600 text-white font-semibold text-xs sm:text-sm md:text-base py-1.5 px-3 sm:py-2 sm:px-12 rounded-full shadow-md transition-all">
                 <span className="xs:hidden">Back</span>
               </button>
             </Link>
           </div>
-
-          {/* Logo - Centered on all devices */}
           <div className="flex justify-center items-center">
-            <div className="scale-75 sm:scale-90 md:scale-100">
-              <Logo height="80" width="80" />
-            </div>
+            <Logo height="80" width="80" />
           </div>
-
-          {/* Empty div for flex balance on mobile (keeps logo centered) */}
           <div className="md:hidden w-[60px] sm:w-[100px]"></div>
         </div>
       </div>
-
-      {/* Back to Home Button */}
 
       <div className="min-h-screen font-popins border my-7 rounded-md border-gray-300 p-6 mx-4 md:mx-auto max-w-md">
         <div className="max-w-md mx-auto bg-white my-6">
@@ -146,30 +171,11 @@ export default function PreApprovalForm() {
           </div>
 
           <div className="px-2 pb-6">
-            <div className="flex items-center justify-between mb-6">
-              <h1 className="text-md md:text-xl font-semibold text-gray-900">
-                Get Pre-Approved in 90 Seconds!
-              </h1>
-              <button
-                type="button"
-                onClick={handleDownloadPdf}
-                className="p-2 text-gray-500 hover:text-gray-700"
-              >
-                {/* <Download className="w-5 h-5" /> */}
-              </button>
-            </div>
+            <h1 className="text-md md:text-xl font-semibold text-gray-900 mb-6">
+              Get Pre-Approved in 90 Seconds!
+            </h1>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
-              {/* Status messages */}
-              {status === "success" && (
-                <div className="flex items-center gap-2 p-3 bg-green-50 border border-green-200 rounded-md">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span className="text-green-800 text-sm">
-                    Saved! Moving to the next step…
-                  </span>
-                </div>
-              )}
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               {status === "error" && (
                 <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-md">
                   <AlertCircle className="w-5 h-5 text-red-600" />
@@ -179,17 +185,12 @@ export default function PreApprovalForm() {
                 </div>
               )}
 
-              {/* Form Fields */}
+              {/* Standard Fields */}
               <div>
-                <label
-                  htmlFor="fullName"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Full Name
                 </label>
-
                 <input
-                  id="fullName"
                   {...register("fullName", {
                     required: "Full name is required",
                   })}
@@ -203,20 +204,16 @@ export default function PreApprovalForm() {
               </div>
 
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Email
                 </label>
                 <input
-                  id="email"
                   type="email"
                   {...register("email", {
                     required: "Email is required",
                     pattern: {
                       value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: "Enter a valid email",
+                      message: "Valid email required",
                     },
                   })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
@@ -227,14 +224,10 @@ export default function PreApprovalForm() {
               </div>
 
               <div>
-                <label
-                  htmlFor="phoneNumber"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Phone Number
                 </label>
                 <input
-                  id="phoneNumber"
                   type="number"
                   {...register("phoneNumber", {
                     required: "Phone number is required",
@@ -249,14 +242,10 @@ export default function PreApprovalForm() {
               </div>
 
               <div>
-                <label
-                  htmlFor="propertyZipCode"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Property Zip Code
                 </label>
                 <input
-                  id="propertyZipCode"
                   type="number"
                   {...register("propertyZipCode", {
                     required: "Zip code is required",
@@ -271,14 +260,10 @@ export default function PreApprovalForm() {
               </div>
 
               <div>
-                <label
-                  htmlFor="propertyAddress"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Property Address
                 </label>
                 <input
-                  id="propertyAddress"
                   {...register("propertyAddress", {
                     required: "Property address is required",
                   })}
@@ -291,100 +276,38 @@ export default function PreApprovalForm() {
                 )}
               </div>
 
-              <div>
-                <label
-                  htmlFor="annualIncome"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Annual Income
-                </label>
-                <input
-                  id="annualIncome"
-                  type="number"
-                  step="0.01"
-                  {...register("annualIncome", {
-                    required: "Annual income is required",
-                    min: {
-                      value: 0,
-                      message: "Income must be a positive number",
-                    },
-                  })}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                />
-                {errors?.annualIncome && (
-                  <p className="text-red-500 text-sm">
-                    {errors.annualIncome.message}
-                  </p>
-                )}
-              </div>
+              {/* Currency Fields (Formatted) */}
+              <CurrencyInput
+                id="annualIncome"
+                label="Annual Income"
+                fieldName="annualIncome"
+                requiredMsg="Annual income is required"
+              />
+              <CurrencyInput
+                id="purchasePrice"
+                label="Purchase Price"
+                fieldName="purchasePrice"
+                requiredMsg="Purchase price is required"
+              />
+              <CurrencyInput
+                id="downPayment"
+                label="Down Payment"
+                fieldName="downPayment"
+                requiredMsg="Down payment is required"
+              />
 
               <div>
-                <label
-                  htmlFor="purchasePrice"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Purchase Price
-                </label>
-                <input
-                  id="purchasePrice"
-                  type="number"
-                  step="0.01"
-                  {...register("purchasePrice", {
-                    required: "Purchase price is required",
-                    min: {
-                      value: 0,
-                      message: "Purchase price must be positive",
-                    },
-                  })}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                />
-                {errors?.purchasePrice && (
-                  <p className="text-red-500 text-sm">
-                    {errors.purchasePrice.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="downPayment"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Down payment
-                </label>
-                <input
-                  id="downPayment"
-                  type="number"
-                  step="0.01"
-                  {...register("downPayment", {
-                    required: "Down payment is required",
-                    min: { value: 0, message: "Down payment must be positive" },
-                  })}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                />
-                {errors?.downPayment && (
-                  <p className="text-red-500 text-sm">
-                    {errors.downPayment.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="loanPurpose"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Loan Purpose
                 </label>
                 <div className="relative">
                   <select
-                    id="loanPurpose"
                     {...register("loanPurpose")}
                     className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent appearance-none"
                   >
-                    {loanPurposeOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
+                    {loanPurposeOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
                       </option>
                     ))}
                   </select>
@@ -392,38 +315,23 @@ export default function PreApprovalForm() {
                 </div>
               </div>
 
-              <div>
-                <label
-                  htmlFor="cashOutAmount"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  How much cash out are you looking for
-                </label>
-                <input
-                  id="cashOutAmount"
-                  type="number"
-                  step="0.01"
-                  {...register("cashOutAmount", {
-                    min: { value: 0, message: "Amount must be positive" },
-                    validate: (val) =>
-                      loanPurpose === "HELOC"
-                        ? (val !== undefined && val !== "") ||
-                          "Cash-out amount required for HELOC"
-                        : true,
-                  })}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                />
-                {errors?.cashOutAmount && (
-                  <p className="text-red-500 text-sm">
-                    {errors.cashOutAmount.message}
-                  </p>
-                )}
-              </div>
+              <CurrencyInput
+                id="cashOutAmount"
+                label="How much cash out are you looking for"
+                fieldName="cashOutAmount"
+                validation={{
+                  validate: (val) =>
+                    loanPurpose === "HELOC"
+                      ? (val !== "" && val !== undefined) ||
+                        "Required for HELOC"
+                      : true,
+                }}
+              />
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#203954] hover:bg-slate-900 disabled:bg-slate-400 text-white font-medium py-4 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 mt-8"
+                className="w-full bg-[#203954] hover:bg-slate-900 disabled:bg-slate-400 text-white font-medium py-4 rounded-lg transition-colors flex items-center justify-center gap-2 mt-8"
               >
                 {isSubmitting ? (
                   <>

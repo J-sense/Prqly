@@ -97,7 +97,7 @@ export default function ContactMethods() {
       ),
       title: "Office",
       contact: "Downtown Birmingham Michigan",
-      description: "headquarters",
+      description: "Headquarters",
     },
     // {
     //   icon: (

@@ -17,7 +17,7 @@ export default function FAQ() {
         "A pre-approval typically involves a soft credit check, which doesn't affect your credit score. However, when you formally apply for a mortgage, a hard credit check will be performed.",
     },
     {
-      question: "Can I Use it with any bank?",
+      question: "Can I use it with any bank?",
       answer:
         "Yes, you can use your pre-approval letter with any lender or bank. It demonstrates your creditworthiness and helps streamline the mortgage application process.",
     },

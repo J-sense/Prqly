@@ -38,7 +38,7 @@ export default function HeroBanner() {
                 to="/pre-approval"
                 className="inline-flex items-center justify-center px-8 py-3 rounded-lg bg-yellow-400 text-slate-900 font-bold text-base hover:bg-yellow-300 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
-                Get Pre-approved Now
+                Get Pre-Approved Now
               </Link>
               <a
                 href="#how-it-works"

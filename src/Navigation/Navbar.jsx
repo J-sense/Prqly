@@ -49,7 +49,7 @@ export default function Header() {
 
   return (
     <header className="relative top-0 z-50 font-sans ">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1450px] px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Logo */}
           <div className="pt-20">
@@ -60,7 +60,7 @@ export default function Header() {
               <button
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
-                className="text-[16px] transition-colors text-[#FFDD28] hover:text-gray-900 font-medium"
+                className="text-[16px] transition-colors text-[#FFDD28] hover:text-white font-medium"
               >
                 {item.label}
               </button>

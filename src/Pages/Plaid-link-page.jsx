@@ -145,7 +145,7 @@ export default function PlaidLinkPage() {
               (!MOCK_MODE && !linkToken) ||
               isProcessing
             }
-            className="mt-6 w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold text-xl py-6 rounded-xl flex items-center justify-center gap-3 transition shadow-lg hover:shadow-xl"
+            className="mt-6 w-full bg-zinc-900 hover:bg-zinc-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold text-xl py-6 rounded-xl flex items-center justify-center gap-3 transition shadow-lg hover:shadow-xl"
           >
             <Link2 className="w-7 h-7" />
             {isProcessing

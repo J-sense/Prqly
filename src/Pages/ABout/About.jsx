@@ -1,7 +1,6 @@
 import img from "../../assets/house.png";
 import PreApprovalCTA from "../home/PreApprovalCTA";
 export const About = () => {
- 
   const stats = [
     { value: "90s", note: "Average approval time" },
     { value: "0", note: "Documents required" },
@@ -12,11 +11,12 @@ export const About = () => {
     <>
       <div className="max-w-[1440px] mx-auto font-popins">
         <section className="bg-white">
-          <div className=" px-4 sm:px-6 py-12 sm:py-16">
+          <div className=" px-4 sm:px-6 my-24 sm:py-16">
             {/* Top: About + Stats */}
             <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
               {/* About text */}
-              <div>
+              {/* Add a height like h-screen or h-[500px] to see the vertical centering */}
+              <div className="flex flex-col justify-center min-h-[400px] ">
                 <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900">
                   ABOUT PREQLY
                 </h2>
