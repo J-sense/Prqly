@@ -28,7 +28,7 @@ export default function Footer({ homePath = "/" }) {
       heading: "Legal",
       links: [
         { label: "Privacy Policy", to: "/policy" },
-        { label: "Terms of service", to: "/terms" },
+        { label: "Terms of Service", to: "/terms" },
       ],
     },
   ];

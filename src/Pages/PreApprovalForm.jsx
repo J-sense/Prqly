@@ -139,7 +139,7 @@ export default function PreApprovalForm() {
   return (
     <div className="">
       {/* Header section remains same */}
-      <div className="relative bg-white p-8 border-b border-gray-300">
+      <div className="relative bg-white p-1 border-b border-gray-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between md:justify-center relative">
           <div className="md:absolute md:left-0">
             <Link to="/">

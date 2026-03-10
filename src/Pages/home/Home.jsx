@@ -22,7 +22,7 @@ export const Home = () => {
       <HowItWorks />
       <AboutSection/>
       {/* <AgentsSection /> */}
-      <TestimonialsSlider />
+      {/* <TestimonialsSlider /> */}
       <PreApprovalCTA />
       <FAQ />
       <ContactMethods />
